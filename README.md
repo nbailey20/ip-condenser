@@ -6,13 +6,13 @@ Utilization ratio: the number of IPs from the input list actually present in a c
 
 Example:
 If the initial list of IPs is:
-10.0.0.0
-10.0.0.1
+10.0.0.0,
+10.0.0.1:
 This can be condensed to 10.0.0.0/31, which has 2 possible IPs available. Since both of the IPs are present in the list, the calculated utilizattion is 2 present/2 possible = 100%
 
 If the initial list is:
-10.0.0.0
-10.0.0.3
+10.0.0.0,
+10.0.0.3:
 It's possible to condense this to 10.0.0.0/30. /30 subnets have 4 possible IPs, and since only 2 are in the list, the utilization is 50%.
 
 
