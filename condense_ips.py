@@ -48,12 +48,13 @@ def condense(ip_list):
                 T[i][i].subnets = [Network(ip_list[i])]
 
             else:
+                ## condensing 2 IPs/subnets results in one new subnet
                 if can_condense(ip_list[i], ip_list[i + diff], diff + 1):
                     T[i][i + diff].value = 1
                     T[i][i + diff].subnets = [
                         Network(span(ip_list[i], ip_list[i + diff]))
                     ]
-                ## if 2 single IPs can't be condensed, then we have 2 resulting subnets
+                ## if 2 single IPs can't be condensed, then we have 2 resulting /32 subnets
                 elif diff == 1:
                     T[i][i + diff].value = 2
                     T[i][i + diff].subnets = [
@@ -61,6 +62,8 @@ def condense(ip_list):
                         Network(ip_list[i + diff]),
                     ]
                 else:
+                    ## consider all possible groupings when combining 2 or more subnets
+                    ## choose option which produced minimum number of resulting subnets
                     min_val = 9999999
                     subnets = []
                     for l in range(i, i + diff):
@@ -71,6 +74,7 @@ def condense(ip_list):
                     T[i][i + diff].value = min_val
                     T[i][i + diff].subnets = subnets
 
+    ## when T is completely filled in, we have our answer T[0][n-1]
     return [str(s) for s in T[0][n - 1].subnets]
 
 
